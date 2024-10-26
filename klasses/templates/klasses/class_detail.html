@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}{{ klass.name }}{% endblock %}
+{% block content %}
+<div class="container">
+    <h1 class="display-4">{{ klass.name }} КЛАСС</h1>
+    <p>{{ klass.description }}</p>
+    <h2>Ученики</h2>
+    <p><a href="{% url 'class_students' klass.pk %}" class="btn btn-primary">Список учеников</a></p>
+    <h2>Стенгазеты</h2>
+    <p>{% if request.user.is_authenticated and request.user.klass == klass %}<a href="{% url 'add_newspaper' klass.pk %}" class="btn btn-success mb-3">Добавить стенгазету</a>{% endif %}</p>
+    {% for newspaper in klass.newspapers.all %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h3 class="card-title">{{ newspaper.title }}</h3>
+                <img src="{{ newspaper.image.url }}" alt="{{ newspaper.title }}" class="img-fluid">
+                <p class="card-text">{{ newspaper.content }}</p>
+                <p><em>Опубликовано: {{ newspaper.created_at }}</em></p>
+                {% if request.user.is_authenticated and request.user.klass == klass %}
+                <p><a href="{% url 'edit_newspaper' newspaper.pk %}" class="btn btn-warning">Редактировать</a></p>
+                <p><a href="{% url 'delete_newspaper' newspaper.pk %}" class="btn btn-danger">Удалить</a></p>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

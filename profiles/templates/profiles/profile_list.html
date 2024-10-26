@@ -1,0 +1,6 @@
+<!-- profiles/templates/profiles/profile_list.html -->
+{% for profile in profiles %}
+    <div>
+        <a href="{% url 'profile_detail' profile.pk %}">{{ profile.name }}</a>
+    </div>
+{% endfor %}

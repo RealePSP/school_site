@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Создать/Редактировать стенгазету{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ klass.name }} класс - {{ form.instance.title|default:"Новая стенгазета" }}</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+    </form>
+</div>
+{% endblock %}

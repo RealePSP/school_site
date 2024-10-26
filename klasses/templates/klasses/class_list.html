@@ -1,0 +1,6 @@
+<!-- klasses/templates/klasses/class_list.html -->
+{% for klass in klasses %}
+    <div>
+        <a href="{% url 'class_detail' klass.pk %}">{{ klass.name }}</a>
+    </div>
+{% endfor %}

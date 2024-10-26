@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Ученики класса {{ klass.name }}{% endblock %}
+{% block content %}
+<div class="container text-center">
+    <h1>Ученики {{ klass.name }} класса</h1>
+    {% for profile in profiles %}
+        <div class="mb-3">
+            <a href="{% url 'profile_detail' profile.pk %}" class="btn btn-link" style="font-size: 1.5rem;">{{ profile.name }}</a>
+            {% if request.user.is_authenticated and request.user.klass == klass %}
+                <div>
+                    <a href="{% url 'profile_edit' profile.pk %}" class="btn btn-warning">Редактировать</a>
+                    <a href="{% url 'profile_delete' profile.pk %}" class="btn btn-danger">Удалить</a>
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+    {% if request.user.is_authenticated and request.user.klass == klass %}
+        <a href="{% url 'profile_create' klass.pk %}" class="btn btn-success mt-3">Добавить профиль</a>
+    {% endif %}
+</div>
+{% endblock %}
